@@ -1,1 +1,75 @@
+// SISTEMA DE GESTÃO COMPARTILHADA
 
+#include <stdio.h>
+
+void cadastro_usina() {
+    /* Cadastro da empresa:
+    
+    cnpj - XX.XXX.XXX/0001-XX
+    nome - literalmente um nome qualquer
+    data_inicio_operacao - XX/XX/XX
+    potencia_estimada - X(MW)
+    
+    */
+    
+    char cnpj_usina[18];
+    
+    scanf("%s", cnpj);
+    
+}
+
+void menu() {
+    // Printa as opções do menu principal
+    printf("1)Cadastrar Usina\n");
+    printf("2)Cadastrar Consumidor\n");
+    printf("3)Cadastrar Contrato entre Consumidor e Usina\n");
+    printf("4)Cadastrar Usina Cadastrada\n");
+    printf("5)Cadastrar Consumidor Cadastrado\n");
+    printf("6)Excluir Usina\n");
+    printf("7)Excluir Consumidor\n");
+    printf("8)Encerrar Programa\n");
+}
+
+int main()
+{
+    int menu_opcao;
+    
+    do {
+        
+        menu();
+    
+        printf("\nInforme qual função deseja realizar: ");
+        scanf("%i", &menu_opcao);
+        
+        switch (menu_opcao) {
+            case 1: {
+                cadastro_usina();
+                break;
+            }
+            case 2: {
+                cadastro_consumidor();
+                break;
+            }
+            case 3: {
+                cadastro_contrato();
+                break;
+            }
+            case 4: {
+                consulta_usina();
+                break;
+            }
+            case 5: {
+                
+            }
+            case 6: {
+                
+            }
+            case 7: {
+                
+            }
+        }
+        
+    } while (menu_opcao != 8); // Mantém o programa executando até o usuário encerrar
+    
+    return 0;
+}
