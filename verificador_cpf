@@ -63,6 +63,7 @@ int valida_cpf(char cpf[])
     k = 10;
     for (int i = 0; i < TAM_CPF-2; i++) {
         digito_verificador = (valores_cpf[i] * k);
+        k--;
     }
     
     return dado_valido;
