@@ -19,18 +19,6 @@
 #define TAM_CPF 11
 #define TAM_NOME 100
 
-void menu() // Exibe o menu de opções
-{ 
-    printf("1)Cadastrar Usina\n");
-    printf("2)Cadastrar Consumidor\n");
-    printf("3)Cadastrar Contrato entre Consumidor e Usina\n");
-    printf("4)Consultar Usina Cadastrada\n");
-    printf("5)Consultar Consumidor Cadastrado\n");
-    printf("6)Excluir Usina\n");
-    printf("7)Excluir Consumidor\n");
-    printf("8)Sair\n");
-}
-
 void limpar_tela() // Limpa o terminal
 {
 	#if defined(linux) || defined(unix) || defined(APPLE)
@@ -42,4 +30,45 @@ void limpar_tela() // Limpa o terminal
 	#endif
 }
 
+void menu() // Exibe o menu de opções
+{ 
+	limpar_tela();
+	
+	printf("-----------------------------\n");
+	printf("SISTEMA DE GESTAO COMPARTILHADA\n");
+	printf("-----------------------------\n\n");
 
+    printf("1)Cadastrar Usina\n");
+    printf("2)Cadastrar Consumidor\n");
+    printf("3)Cadastrar Contrato entre Consumidor e Usina\n");
+    printf("4)Consultar Usina Cadastrada\n");
+    printf("5)Consultar Consumidor Cadastrado\n");
+    printf("6)Excluir Usina\n");
+    printf("7)Excluir Consumidor\n");
+    printf("8)Sair\n");
+}
+
+typedef struct {
+	int dia;
+	int mes;
+	int ano;
+} DATA;
+
+typedef struct {
+	char nome[TAM_NOME];
+	char cnpj[TAM_CNPJ];
+	DATA data;
+	float potencia;
+} USINA;
+
+typedef struct {
+	char nome[TAM_NOME];
+	char id[TAM_CNPJ];
+} CONSUMIDOR;
+
+typedef struct {
+	char cnpj_usina[TAM_CNPJ];
+	char id_con[TAM_CNPJ];
+	DATA data;
+	float potencia;
+} CONTRATO;
