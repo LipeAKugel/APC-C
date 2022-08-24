@@ -1,4 +1,4 @@
-// SISTEMA DE GEST√O COMPARTILHADA
+/// SISTEMA DE GEST√ÉO COMPARTILHADA
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,7 +7,7 @@
 
 int valida_data(DATA data) // Verifica data.
 {
-	// FunÁ„o que verifica a validaÁ„o da data
+	// Fun√ß√£o que verifica a valida√ß√£o da data
 	// DD MM AAAA
 	
 	int dado_valido;
@@ -20,7 +20,7 @@ int valida_data(DATA data) // Verifica data.
 	valor_mes = data.mes;
 	valor_ano = data.ano;
 	
-	// Verifica se os valores s„o inv·lidos
+	// Verifica se os valores s√£o inv√°lidos
 	if (valor_dia < 1 || valor_mes < 1 || valor_mes > 12 || valor_ano < 1900) {
 		dado_valido = 0;
 		
@@ -45,7 +45,7 @@ int valida_data(DATA data) // Verifica data.
 			
 		} else {
 			
-			// Ano n„o bissexto:
+			// Ano n√£o bissexto:
 			if (valor_mes == 1 || valor_mes == 3 || valor_mes == 5 || valor_mes == 7 || valor_mes == 8 || valor_mes == 10 || valor_mes == 12) {
 				if (valor_dia > 31) dado_valido = 0;
 			} else {
@@ -70,87 +70,87 @@ int valida_cnpj(char cnpj[]) // Verifica CNPJ.
 {
 	// XXXXXXXX0001XX
 	
-	// DeclaraÁıes
+	// Declara√ß√µes
 	int dado_valido;
 	int valores_cnpj[TAM_CNPJ];
 	int sequencia_verificacao1[] = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2}; // Para primeiro digito verificador
 	int sequencia_verificacao2[] = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2}; // Para segundo digito verificador
 	int digito_verificador;
 	
-	// InstruÁıes
+	// Instru√ß√µes
 	dado_valido = 1;
 	
-	// VerificaÁ„o do formato
+	// Verifica√ß√£o do formato
 	if (cnpj[TAM_CNPJ] != '\0') {
-		dado_valido = 0; // Caso chegou aqui, h· mais caracteres que o devido.
+		dado_valido = 0; // Caso chegou aqui, h√° mais caracteres que o devido.
 	}
 	
-	// VerificaÁ„o dos valores numÈricos
+	// Verifica√ß√£o dos valores num√©ricos
 	for (int i = 0; i < (TAM_CNPJ); i++) {
 		if (!(cnpj[i] >= 48 && cnpj[i] <= 57)) {
-			dado_valido = 0; // Caso chegou aqui, um caracter do CNPJ n„o È um n˙mero.
+			dado_valido = 0; // Caso chegou aqui, um caracter do CNPJ n√£o √© um n√∫mero.
 		}
 	}
 	
-	// VerificaÁ„o do 0001 ou "matriz"
-	// Como estamos cadastrando uma usina, e n„o uma filial, o CNPJ ter· somente o 0001.
+	// Verifica√ß√£o do 0001 ou "matriz"
+	// Como estamos cadastrando uma usina, e n√£o uma filial, o CNPJ ter√° somente o 0001.
 	for (int i = 8; i < (TAM_CNPJ-4); i++) {
-		if (cnpj[i] != '0') dado_valido = 0; // Caso chegou aqui, h· um valor incorreto.
+		if (cnpj[i] != '0') dado_valido = 0; // Caso chegou aqui, h√° um valor incorreto.
 	}
 	
-	//if (cnpj[TAM_CNPJ-3] != '1') dado_valido = 0; // Caso chegou aqui, h· um valor incorreto.
+	//if (cnpj[TAM_CNPJ-3] != '1') dado_valido = 0; // Caso chegou aqui, h√° um valor incorreto.
 	
-	// Armazenamento dos valores n˙mericos do CNPJ
+	// Armazenamento dos valores n√∫mericos do CNPJ
 	for (int i = 0; i < (TAM_CNPJ); i++) {
-		valores_cnpj[i] = (cnpj[i] - '0'); // Pega os valores numÈricos do CNPJ e guarda num vetor int.
+		valores_cnpj[i] = (cnpj[i] - '0'); // Pega os valores num√©ricos do CNPJ e guarda num vetor int.
 	}
 	
 	
 	
-	//VerificaÁ„o dos digitos verificadores:
+	//Verifica√ß√£o dos digitos verificadores:
 	
 	// Primeiro digito verificador
 	
 	digito_verificador = 0;
 	for (int i = 0; i < TAM_CNPJ-2; i++) {
-		// Soma todos os resultados da multiplicaÁ„o entre os n˙meros do CNPJ e dos respectivos n˙meros
-		// na posiÁıes da primeira sequÍncia de verificaÁ„o.
+		// Soma todos os resultados da multiplica√ß√£o entre os n√∫meros do CNPJ e dos respectivos n√∫meros
+		// na posi√ß√µes da primeira sequ√™ncia de verifica√ß√£o.
 		digito_verificador = (digito_verificador + (valores_cnpj[i] * sequencia_verificacao1[i]));
 	}
 	
 	digito_verificador = digito_verificador % 11; // Divide o resultado por 11.
 	
-	if (digito_verificador < 2) { // Resto da divis„o for menor que 2.
-		digito_verificador = 0; // Caso chegou aqui, o primeiro digito verificador È 0.
+	if (digito_verificador < 2) { // Resto da divis√£o for menor que 2.
+		digito_verificador = 0; // Caso chegou aqui, o primeiro digito verificador √© 0.
 		
-	} else { // Resto da divis„o n„o for menor 2.
-		digito_verificador = (11 - digito_verificador); // Caso chegou aqui, o primeiro digito verificador È igual a 11 menos o resto.
+	} else { // Resto da divis√£o n√£o for menor 2.
+		digito_verificador = (11 - digito_verificador); // Caso chegou aqui, o primeiro digito verificador √© igual a 11 menos o resto.
 	}
 	
 	if (valores_cnpj[TAM_CNPJ-2] != digito_verificador) { // Compara o digito do CNPJ e o digito encontrado no algoritmo anterior.
-		dado_valido = 0; // Caso chegou aqui, o primeiro digito verificador do CNPJ est· incorreto.
+		dado_valido = 0; // Caso chegou aqui, o primeiro digito verificador do CNPJ est√° incorreto.
 	}
 	
 	// Segundo digito verificador
 	
 	digito_verificador = 0;
 	for (int i = 0; i < TAM_CNPJ-1; i++) {
-		// Soma todos os resultados da multiplicaÁ„o entre os n˙meros do CNPJ e dos respectivos n˙meros
-		// na posiÁıes da segunda sequÍncia de verificaÁ„o.
+		// Soma todos os resultados da multiplica√ß√£o entre os n√∫meros do CNPJ e dos respectivos n√∫meros
+		// na posi√ß√µes da segunda sequ√™ncia de verifica√ß√£o.
 		digito_verificador = (digito_verificador + (valores_cnpj[i] * sequencia_verificacao2[i]));
 	}
 	
 	digito_verificador = digito_verificador % 11;
 	
-	if (digito_verificador < 2) { // Resto da divis„o for menor que 2.
-		digito_verificador = 0; // Caso chegou aqui, o segundo digito verificador È 0.
+	if (digito_verificador < 2) { // Resto da divis√£o for menor que 2.
+		digito_verificador = 0; // Caso chegou aqui, o segundo digito verificador √© 0.
 		
-	} else { // Resto da divis„o n„o for menor 2.
-		digito_verificador = (11 - digito_verificador); // Caso chegou aqui, o segundo digito verificador È igual a 11 menos o resto.
+	} else { // Resto da divis√£o n√£o for menor 2.
+		digito_verificador = (11 - digito_verificador); // Caso chegou aqui, o segundo digito verificador √© igual a 11 menos o resto.
 	}
 	
 	if (valores_cnpj[TAM_CNPJ-1] != digito_verificador) { // Compara o digito do CNPJ e o digito encontrado no algoritmo anterior.
-		dado_valido = 0; // Caso chegou aqui, o segundo digito verificador do CNPJ est· incorreto.
+		dado_valido = 0; // Caso chegou aqui, o segundo digito verificador do CNPJ est√° incorreto.
 	}
 	
 	return dado_valido;
@@ -165,40 +165,40 @@ int valida_cpf(char cpf[]) // Verifica CPF.
     
     dado_valido = 1;
     
-    // VerificaÁ„o da estrutura
+    // Verifica√ß√£o da estrutura
     
-    // VerificaÁ„o do formato
+    // Verifica√ß√£o do formato
     if (cpf[TAM_CPF] != '\0') {
-        dado_valido = 0; // Caso chegou aqui, existem caracteres alÈm tamanho m·ximo.
+        dado_valido = 0; // Caso chegou aqui, existem caracteres al√©m tamanho m√°ximo.
     }
     
-    // VerificaÁ„o dos valores n˙mericos
+    // Verifica√ß√£o dos valores n√∫mericos
     for (int i = 0; i < TAM_CPF; i++) {
     	if (!(cpf[i] >= 48 && cpf[i] <= 57)) {
-    		dado_valido = 0; // Caso chegou aqui, existem caracteres que n„o s„o n˙meros.
+    		dado_valido = 0; // Caso chegou aqui, existem caracteres que n√£o s√£o n√∫meros.
 		}
 	}
     
-    // Armazenamento dos valores n˙mericos do CPF
+    // Armazenamento dos valores n√∫mericos do CPF
     j = 0;
     for (int i = 0; i < TAM_CPF; i++) {
         if (cpf[i] >= 48 && cpf[i] <= 57) {
-            valores_cpf[j] = (cpf[i] - '0'); // Guarda os caracteres numÈricos do CPF em um vetor inteiro
+            valores_cpf[j] = (cpf[i] - '0'); // Guarda os caracteres num√©ricos do CPF em um vetor inteiro
             j++;
         }
     }
     
     
     
-    // VerificaÁ„o dos digitos verificadores
+    // Verifica√ß√£o dos digitos verificadores
     
     // Primeiro digito verificador
     
     k = 10;
     digito_verificador = 0;
     for (int i = 0; i < TAM_CPF-2; i++) {
-    	// Soma todos os resultados da multiplicaÁ„o entre os n˙meros do CPF e dos respectivos n˙meros
-		// da primeira sequÍncia de verificaÁ„o.
+    	// Soma todos os resultados da multiplica√ß√£o entre os n√∫meros do CPF e dos respectivos n√∫meros
+		// da primeira sequ√™ncia de verifica√ß√£o.
         digito_verificador = digito_verificador + (valores_cpf[i] * k);
         k--;
     }
@@ -206,22 +206,22 @@ int valida_cpf(char cpf[]) // Verifica CPF.
     digito_verificador = digito_verificador % 11; // Divide o resultado por 11.
     
     if (digito_verificador < 2) { // Se o resto for menor que 2.
-    	digito_verificador = 0; // Chegou aqui, o primeiro dÌgito verificador È 0. 
-	} else { // Se o resto n„o for menor que 2.
-		digito_verificador = 11 - digito_verificador; // Caso chegou aqui, o primeiro digito verificador È igual a 11 menos o resto.
+    	digito_verificador = 0; // Chegou aqui, o primeiro d√≠gito verificador √© 0. 
+	} else { // Se o resto n√£o for menor que 2.
+		digito_verificador = 11 - digito_verificador; // Caso chegou aqui, o primeiro digito verificador √© igual a 11 menos o resto.
 	}
     
     if (valores_cpf[TAM_CPF-2] != digito_verificador) { // Compara o digito do CPF e o digito encontrado no algoritmo anterior.
-		dado_valido = 0; // Caso chegou aqui, o primeiro digito verificador do CPF est· incorreto.
+		dado_valido = 0; // Caso chegou aqui, o primeiro digito verificador do CPF est√° incorreto.
 	}
     
-    // Segundo dÌgito verificador
+    // Segundo d√≠gito verificador
     
     k = 11;
     digito_verificador = 0;
     for (int i = 0; i < TAM_CPF-1; i++) {
-    	// Soma todos os resultados da multiplicaÁ„o entre os n˙meros do CPF e dos respectivos n˙meros
-		// da segunda sequÍncia de verificaÁ„o.
+    	// Soma todos os resultados da multiplica√ß√£o entre os n√∫meros do CPF e dos respectivos n√∫meros
+		// da segunda sequ√™ncia de verifica√ß√£o.
 		digito_verificador = digito_verificador + (valores_cpf[i] * k);
 		k--;
 	}
@@ -229,16 +229,16 @@ int valida_cpf(char cpf[]) // Verifica CPF.
     digito_verificador = digito_verificador % 11; // Divide o resultado por 11.
     
     if (digito_verificador < 2) { // Se o resto for menor que 2.
-    	digito_verificador = 0; // Chegou aqui, o segundo dÌgito verificador È 0.
-	} else { // Se o resto n„o for menor que 2.
-		digito_verificador = 11 - digito_verificador; // Chegou aqui, o segundo dÌgito verificador È igual a 11 menos o resto. 
+    	digito_verificador = 0; // Chegou aqui, o segundo d√≠gito verificador √© 0.
+	} else { // Se o resto n√£o for menor que 2.
+		digito_verificador = 11 - digito_verificador; // Chegou aqui, o segundo d√≠gito verificador √© igual a 11 menos o resto. 
 	}
 	
 	if (valores_cpf[TAM_CPF-1] != digito_verificador) { // Compara o digito do CPF e o digito encontrado no algoritmo anterior.
-		dado_valido = 0; // Caso chegou aqui, o segundo digito verificador do CPF est· incorreto.
+		dado_valido = 0; // Caso chegou aqui, o segundo digito verificador do CPF est√° incorreto.
 	}
     
-    return dado_valido; // Retorna o se o dado È inv·lido (0) ou v·lido (1).
+    return dado_valido; // Retorna o se o dado √© inv√°lido (0) ou v√°lido (1).
 }
 
 void cadastro_usina() // Realiza o cadastro de uma usina.
@@ -250,14 +250,14 @@ void cadastro_usina() // Realiza o cadastro de uma usina.
     potencia_estimada - X(MW)
     */
 	
-	// DeclaraÁıes de vari·veis
-	USINA usina_rg; // Vari·vel registro USINA, usada para receber os dados inseridos.
-	USINA usina_cm; // Vari·vel registro USINA, usada para verificar o arquivo por usinas j· existentes.
+	// Declara√ß√µes de vari√°veis
+	USINA usina_rg; // Vari√°vel registro USINA, usada para receber os dados inseridos.
+	USINA usina_cm; // Vari√°vel registro USINA, usada para verificar o arquivo por usinas j√° existentes.
 
-    int dado_valido; // Se o valor for 0, È inv·lido, se for 1, È v·lido.
-    int usina_ex; // Recebe 1 se a usina j· existir no banco de dados, e 0 se n„o.
+    int dado_valido; // Se o valor for 0, √© inv√°lido, se for 1, √© v√°lido.
+    int usina_ex; // Recebe 1 se a usina j√° existir no banco de dados, e 0 se n√£o.
     
-    // InstruÁıes
+    // Instru√ß√µes
     do {
 	    limpar_tela();
 	    
@@ -273,49 +273,47 @@ void cadastro_usina() // Realiza o cadastro de uma usina.
 	    // CNPJ
 	    do {
 	    	printf("CNPJ: (Apenas numeros) ");
-	    	fflush(stdin); // Limpa o buffer.
-	    	gets(usina_rg.cnpj); // Recebe o dado do usu·rio.
-	    	dado_valido = valida_cnpj(usina_rg.cnpj); // Chama a funÁ„o para verificar o dado.
+	    	while ((getchar()) != '\n'); // Limpa o buffer.
+	    	gets(usina_rg.cnpj); // Recebe o dado do usu√°rio.
+	    	dado_valido = valida_cnpj(usina_rg.cnpj); // Chama a fun√ß√£o para verificar o dado.
 	    	
 	    	if (dado_valido == 0) {
-				printf("FORMATO DE DADO INCORRETO!\n"); // Se chegou aqui, o dado est· incorreto.
+				printf("FORMATO DE DADO INCORRETO!\n"); // Se chegou aqui, o dado est√° incorreto.
 			}
 		} while (dado_valido == 0); // Caso o dado esteja incorreto, repete o processo.
 	    
 	    
 	    // NOME
 	    printf("Nome da Usina: ");
-	    fflush(stdin); // Limpa o buffer.
-		gets(usina_rg.nome); // Recebe o dado do usu·rio.
-	    
+		gets(usina_rg.nome); // Recebe o dado do usu√°rio.
 		
 		
-		// DATA DE INÕCIO DE OPERA«√O
+		// DATA DE IN√çCIO DE OPERA√á√ÉO
 		do {
 			printf("Data de inicio de operacao (DD MM AAAA): ");
-			scanf("%d %d %d", &usina_rg.data.dia, &usina_rg.data.mes, &usina_rg.data.ano); // Recebe o dado do usu·rio.
-			dado_valido = valida_data(usina_rg.data); // Chama a funÁ„o para verificar o dado.
+			scanf("%d %d %d", &usina_rg.data.dia, &usina_rg.data.mes, &usina_rg.data.ano); // Recebe o dado do usu√°rio.
+			dado_valido = valida_data(usina_rg.data); // Chama a fun√ß√£o para verificar o dado.
 			 
 			if (dado_valido == 0) {
-				printf("DATA INV¡LIDA!\n"); // Se chegou aqui, o dado est· incorreto.
+				printf("DATA INV√ÅLIDA!\n"); // Se chegou aqui, o dado est√° incorreto.
 			}
 			
 		} while (dado_valido == 0); // Caso o dado esteja incorreto, repete o processo.
 		
 		
-		// POT NCIA ESTIMADA
+		// POT√äNCIA ESTIMADA
 		do {
 			printf("Potencia estimada (GW): ");
-			scanf("%f", &usina_rg.potencia); // Recebe o dado do usu·rio.
+			scanf("%f", &usina_rg.potencia); // Recebe o dado do usu√°rio.
 			
-			if (usina_rg.potencia <= 0) { // Verifica se a potÍncia È maior que 0.
-				dado_valido = 0; // Se chegou aqui, a potÍncia È inv·lida.
+			if (usina_rg.potencia <= 0) { // Verifica se a pot√™ncia √© maior que 0.
+				dado_valido = 0; // Se chegou aqui, a pot√™ncia √© inv√°lida.
 			} else {
-				dado_valido = 1; // Se chegou aqui, a potÍncia È v·lida.
+				dado_valido = 1; // Se chegou aqui, a pot√™ncia √© v√°lida.
 			}
 			
 			if (dado_valido == 0) {
-				printf("VALOR DE POT NCIA INV¡LIDO!\n"); // Se chegou aqui, o dado est· incorreto.
+				printf("VALOR DE POT√äNCIA INV√ÅLIDO!\n"); // Se chegou aqui, o dado est√° incorreto.
 			}
 			
 		} while (dado_valido == 0); // Caso o dado esteja incorreto, repete o processo.
@@ -327,26 +325,26 @@ void cadastro_usina() // Realiza o cadastro de uma usina.
 		
 		arquivo = fopen("usinas.txt", "ab"); // Abre o arquivo.
 		
-		if (arquivo == NULL) { // Verifica se foi possÌvel abrir o arquivo.
-			printf("\nN„o foi possÌvel salvar os dados!\n"); // Se n„o foi possÌvel, exibe uma mensagem de erro.
+		if (arquivo == NULL) { // Verifica se foi poss√≠vel abrir o arquivo.
+			printf("\nN√£o foi poss√≠vel salvar os dados!\n"); // Se n√£o foi poss√≠vel, exibe uma mensagem de erro.
 		}
 		
 		fclose(arquivo); // Fecha o arquivo.
 		
 		if (arquivo != NULL) {
 			
-			// VERIFICA«√O DE CONFLITO DE DADOS
+			// VERIFICA√á√ÉO DE CONFLITO DE DADOS
 			arquivo = fopen("usinas.txt", "rb"); // Abre o arquivo para leitura.
-			fseek(arquivo, 0, SEEK_CUR); // Coloca o ponteiro no inÌcio do arquivo.
+			fseek(arquivo, 0, SEEK_CUR); // Coloca o ponteiro no in√≠cio do arquivo.
 			
 			usina_ex = 0;
-			while (!feof(arquivo)) { // Executa atÈ o fim do arquivo.
-				fread(&usina_cm, sizeof(USINA), 1, arquivo); // LÍ a struct da usina no arquivo.
+			while (!feof(arquivo)) { // Executa at√© o fim do arquivo.
+				fread(&usina_cm, sizeof(USINA), 1, arquivo); // L√™ a struct da usina no arquivo.
 				
 				if(strstr(usina_cm.cnpj, usina_rg.cnpj) != 0) {
-					usina_ex = 1; // Se chegou aqui, a usina inserida j· foi cadastrada anteriormente.
-					printf("\nNao foi possÌvel cadastrar\n"); 
-					printf("CNPJ j· cadastrado!\n");
+					usina_ex = 1; // Se chegou aqui, a usina inserida j√° foi cadastrada anteriormente.
+					printf("\nNao foi poss√≠vel cadastrar\n"); 
+					printf("CNPJ j√° cadastrado!\n");
 					break;
 				}
 			}
@@ -355,7 +353,7 @@ void cadastro_usina() // Realiza o cadastro de uma usina.
 			
 			// ARMAZENAMENTO DOS DADOS
 			arquivo = fopen("usinas.txt", "ab"); // Abre o arquivo para escrita.
-			if (usina_ex != 1) { // Se a usina j· n„o tiver sido cadastrada, armazene os dados.
+			if (usina_ex != 1) { // Se a usina j√° n√£o tiver sido cadastrada, armazene os dados.
 				fseek(arquivo, 0, SEEK_END); // Coloca o ponteiro no final do arquivo.
 				fwrite(&usina_rg, sizeof(USINA), 1, arquivo); // Guarda os dados no arquivo.
 			
@@ -366,7 +364,8 @@ void cadastro_usina() // Realiza o cadastro de uma usina.
 		fclose(arquivo); // Fecha o arquivo.
 		
 		printf("\nDeseja continuar [s/n]?\n");
-	} while (getche() == 's' || getche() == 'S');
+		while ((getchar()) != '\n'); // Limpa o buffer.
+	} while (getch() == 's' || getch() == 'S');
 }
 
 void cadastro_consumidor() // Realiza o cadastro de um consumidor.
@@ -377,16 +376,16 @@ void cadastro_consumidor() // Realiza o cadastro de um consumidor.
 	nome - literalmente qualquer nome
 	*/
 	
-	// DeclaraÁıes de vari·veis
+	// Declara√ß√µes de vari√°veis
 	
-	CONSUMIDOR consum_rg; // Vari·vel tipo CONSUMIDOR, usada para receber os dados inseridos.
-	CONSUMIDOR consum_cm; // Vari·vel tipo CONSUMIDOR, usada para verificar conflitos de CPF ou CNPJ (identificaÁ„o).
-	USINA usina_cm; // Vari·vel tipo USINA, usada para verificar conflitos de CNPJ.
+	CONSUMIDOR consum_rg; // Vari√°vel tipo CONSUMIDOR, usada para receber os dados inseridos.
+	CONSUMIDOR consum_cm; // Vari√°vel tipo CONSUMIDOR, usada para verificar conflitos de CPF ou CNPJ (identifica√ß√£o).
+	USINA usina_cm; // Vari√°vel tipo USINA, usada para verificar conflitos de CNPJ.
 	
-	int dado_valido; // Se o valor for 0, È inv·lido, se for 1, È v·lido.
-	int consum_ex; // Recebe 1 se o consumidor j· existir no banco de dados, e 0 se n„o.
+	int dado_valido; // Se o valor for 0, √© inv√°lido, se for 1, √© v√°lido.
+	int consum_ex; // Recebe 1 se o consumidor j√° existir no banco de dados, e 0 se n√£o.
 	
-	// InstruÁıes
+	// Instru√ß√µes
 	
 	do {
 		limpar_tela();
@@ -400,30 +399,30 @@ void cadastro_consumidor() // Realiza o cadastro de um consumidor.
 		
 		// RECEBIMENTO DE DADOS:
 		
-		// IDENTIFICA«√O (CPF OU CNPJ)
+		// IDENTIFICA√á√ÉO (CPF OU CNPJ)
 	    do {
 	    	printf("CPF ou CNPJ: (Apenas numeros) ");
-	    	fflush(stdin); // Limpa o buffer
-	    	gets(consum_rg.id); // Recebe o dado do usu·rio.
+	    	while ((getchar()) != '\n'); // Limpa o buffer.
+	    	gets(consum_rg.id); // Recebe o dado do usu√°rio.
 	    	
-	    	if (strlen(consum_rg.id) == TAM_CNPJ) { // Verifica se o usu·rio digitou um CNPJ.
-				dado_valido = valida_cnpj(consum_rg.id); // Chama a funÁ„o para verificar o CNPJ.
-			} else if (strlen(consum_rg.id) == TAM_CPF) { // Verifica se o usu·rio digitou um CPF.
-				dado_valido = valida_cpf(consum_rg.id); // Chama a funÁ„o para verificar o CPF.
+	    	if (strlen(consum_rg.id) == TAM_CNPJ) { // Verifica se o usu√°rio digitou um CNPJ.
+				dado_valido = valida_cnpj(consum_rg.id); // Chama a fun√ß√£o para verificar o CNPJ.
+			} else if (strlen(consum_rg.id) == TAM_CPF) { // Verifica se o usu√°rio digitou um CPF.
+				dado_valido = valida_cpf(consum_rg.id); // Chama a fun√ß√£o para verificar o CPF.
 			} else {
-				dado_valido = 0; // Se chegou aqui, o dado est· em formato incorreto.
+				dado_valido = 0; // Se chegou aqui, o dado est√° em formato incorreto.
 			}
 	    	
 	    	if (dado_valido == 0) {
-				printf("FORMATO DE DADO INCORRETO!"); // Se chegou aqui, o dado est· incorreto.
+				printf("FORMATO DE DADO INCORRETO!"); // Se chegou aqui, o dado est√° incorreto.
 			}
 		} while (dado_valido == 0); // Caso o dado esteja incorreto, repete o processo.
 	
 		
 		// NOME
 		    printf("Nome do consumidor: ");
-		    fflush(stdin); // Limpa o buffer.
-			gets(consum_rg.nome); // Recebe o dado do usu·rio.
+		    while ((getchar()) != '\n'); // Limpa o buffer.
+			gets(consum_rg.nome); // Recebe o dado do usu√°rio.
 			
 			
 		// ARMAZENAMENTO DOS DADOS EM ARQUIVO:
@@ -432,41 +431,41 @@ void cadastro_consumidor() // Realiza o cadastro de um consumidor.
 		
 		arquivo = fopen("consumidores.txt", "ab"); // Abre o arquivo.
 		
-		if (arquivo == NULL) { // Verifica se foi possÌvel abrir o arquivo.
-			printf("\nN„o foi possÌvel salvar os dados!\n"); // Se n„o foi possÌvel, exibe uma mensagem de erro.
+		if (arquivo == NULL) { // Verifica se foi poss√≠vel abrir o arquivo.
+			printf("\nN√£o foi poss√≠vel salvar os dados!\n"); // Se n√£o foi poss√≠vel, exibe uma mensagem de erro.
 		}
 		
 		fclose(arquivo); // Fecha o arquivo.
 		
 		if (arquivo != NULL) {
 			
-			// VERIFICA«√O DE CONFLITO DE DADOS
+			// VERIFICA√á√ÉO DE CONFLITO DE DADOS
 			arquivo = fopen("consumidores.txt", "rb"); // Abre o arquivo para leitura.
-			fseek(arquivo, 0, SEEK_CUR); // Coloca o ponteiro no inÌcio do arquivo.
+			fseek(arquivo, 0, SEEK_CUR); // Coloca o ponteiro no in√≠cio do arquivo.
 			
 			consum_ex = 0;
-			while (!feof(arquivo)) { // Executa atÈ o fim do arquivo de consumidores.
-				fread(&consum_cm, sizeof(CONSUMIDOR), 1, arquivo); // LÍ a struct do consumidor no arquivo.
+			while (!feof(arquivo)) { // Executa at√© o fim do arquivo de consumidores.
+				fread(&consum_cm, sizeof(CONSUMIDOR), 1, arquivo); // L√™ a struct do consumidor no arquivo.
 				
 				if(strstr(consum_cm.id, consum_rg.id) != 0) {
-					consum_ex = 1; // Se chegou aqui, o CPF ou CNPJ inserido j· foi cadastrado anteriormente.
+					consum_ex = 1; // Se chegou aqui, o CPF ou CNPJ inserido j√° foi cadastrado anteriormente.
 					break;
 				}
 			}
 			
 			arquivo = fopen("usinas.txt", "rb"); // Abre o arquivo para leitura.
-			fseek(arquivo, 0, SEEK_CUR); // Coloca o ponteiro no inÌcio do arquivo.
+			fseek(arquivo, 0, SEEK_CUR); // Coloca o ponteiro no in√≠cio do arquivo.
 			
-			while (!feof(arquivo)) { // Executa atÈ o fim do arquivo de usinas.
-				fread(&usina_cm, sizeof(USINA), 1, arquivo); // LÍ a struct da usina no arquivo.
+			while (!feof(arquivo)) { // Executa at√© o fim do arquivo de usinas.
+				fread(&usina_cm, sizeof(USINA), 1, arquivo); // L√™ a struct da usina no arquivo.
 				
 				if(strstr(usina_cm.cnpj, consum_rg.id) != 0) {
-					consum_ex = 1; // Se chegou aqui, o CNPJ inserido j· foi cadastrado anteriormente.
+					consum_ex = 1; // Se chegou aqui, o CNPJ inserido j√° foi cadastrado anteriormente.
 					break;
 				}
 			}
 			
-			if (consum_ex == 1) { // Exibir mensagem de erro para o usu·rio.
+			if (consum_ex == 1) { // Exibir mensagem de erro para o usu√°rio.
 					printf("\nNao foi possivel cadastrar\n"); 
 					printf("CNPJ/CPF ja cadastrado!\n");
 			}
@@ -475,7 +474,7 @@ void cadastro_consumidor() // Realiza o cadastro de um consumidor.
 			
 			// ARMAZENAMENTO DOS DADOS
 			arquivo = fopen("consumidores.txt", "ab"); // Abre o arquivo para escrita.
-			if (consum_ex != 1) { // Se o consumidor j· n„o tiver sido cadastrado, armazene os dados.
+			if (consum_ex != 1) { // Se o consumidor j√° n√£o tiver sido cadastrado, armazene os dados.
 				fseek(arquivo, 0, SEEK_END); // Coloca o ponteiro no final do arquivo.
 				fwrite(&consum_rg, sizeof(CONSUMIDOR), 1, arquivo); // Guarda os dados no arquivo.
 			
@@ -485,6 +484,7 @@ void cadastro_consumidor() // Realiza o cadastro de um consumidor.
 		
 		fclose(arquivo); // Fecha o arquivo.
 		
+		while ((getchar()) != '\n'); // Limpa o buffer.
 		printf("\nDeseja continuar [s/n]?\n");
 	} while (getch() == 's' || getch() == 'S');
 }
@@ -498,16 +498,16 @@ void cadastro_contrato() // Realiza o cadastro de um contrato.
     potencia_contratada - X(MW)
     */
     
-    // DeclaraÁıes de vari·veis
+    // Declara√ß√µes de vari√°veis
     FILE *arquivo; // Ponteiro do arquivo.
     
-    CONTRATO contrato_rg; // Vari·vel tipo CONTRATO, usada para receber os dados.
-    USINA usina_cm; // Vari·vel tipo USINA, usada para comparar dados da usina. 
-    CONSUMIDOR consum_cm; // Vari·vel tipo CONSUMIDOR, usada para comparar dados do consumidor.
+    CONTRATO contrato_rg; // Vari√°vel tipo CONTRATO, usada para receber os dados.
+    USINA usina_cm; // Vari√°vel tipo USINA, usada para comparar dados da usina. 
+    CONSUMIDOR consum_cm; // Vari√°vel tipo CONSUMIDOR, usada para comparar dados do consumidor.
     
-    int dado_valido; // Se o valor for 0, È inv·lido, se for 1, È v·lido.
+    int dado_valido; // Se o valor for 0, √© inv√°lido, se for 1, √© v√°lido.
     
-    // InstruÁıes
+    // Instru√ß√µes
     
     do {
     	limpar_tela();
@@ -524,15 +524,15 @@ void cadastro_contrato() // Realiza o cadastro de um contrato.
 	    // CNPJ DA USINA
 	    do {
 	    	printf("CNPJ da usina: ");
-	    	fflush(stdin); // Limpa o buffer.
-	    	gets(contrato_rg.cnpj_usina); // Recebe o dado do usu·rio.
+	    	while ((getchar()) != '\n'); // Limpa o buffer.
+	    	gets(contrato_rg.cnpj_usina); // Recebe o dado do usu√°rio.
 	    	
-	    	// VerificaÁ„o da usina
+	    	// Verifica√ß√£o da usina
 	    	arquivo = fopen("usinas.txt", "rb"); // Abre o arquivo de usinas para leitura.
 	    	
 	    	dado_valido = 0;
-	    	while (!feof(arquivo)) { // Executa atÈ o fim do arquivo
-	    		fread(&usina_cm, sizeof(USINA), 1, arquivo); // LÍ a struct da usina no arquivo.
+	    	while (!feof(arquivo)) { // Executa at√© o fim do arquivo
+	    		fread(&usina_cm, sizeof(USINA), 1, arquivo); // L√™ a struct da usina no arquivo.
 	    		
 	    		if(strstr(usina_cm.cnpj, contrato_rg.cnpj_usina) != 0) { // Compara o CNPJ da usina lida e o CNPJ inserido.
 					dado_valido = 1; // Se chegou aqui, a usina existe.
@@ -541,20 +541,21 @@ void cadastro_contrato() // Realiza o cadastro de um contrato.
 			}
 			
 			if (dado_valido == 0) {
-				printf("N„o existe usina com esse CNPJ!\n");
+				printf("N√£o existe usina com esse CNPJ!\n");
 			}
 	    	
 		} while (dado_valido == 0);
 		
 	    // ID DO CONSUMIDOR
-	    // DATA DE INÕCIO DO CONTRATO
-	    // POT NCIA CONTRATADA
+	    // DATA DE IN√çCIO DO CONTRATO
+	    // POT√äNCIA CONTRATADA
 	    
 	    
 	    // ARMAZENAMENTO DO CONTRATO EM ARQUIVO:
 	    
+	    while ((getchar()) != '\n'); // Limpa o buffer.
 	    printf("\nDeseja continuar [s/n]?\n");
-	} while (getche() == 's' || getche() == 'S');
+	} while (getch() == 's' || getch() == 'S');
 }
 
 int main()
@@ -565,9 +566,9 @@ int main()
         menu(); // Exibe o menu.
     
         printf("\nOpcao: ");
-        scanf("%i", &menu_opcao); // Recebe a opÁ„o do usu·rio.
+        scanf("%i", &menu_opcao); // Recebe a op√ß√£o do usu√°rio.
         
-        switch (menu_opcao) { // De acordo com a instruÁ„o do usu·rio, abre a respectiva funÁ„o.
+        switch (menu_opcao) { // De acordo com a instru√ß√£o do usu√°rio, abre a respectiva fun√ß√£o.
             case CADASTRO_USINA: {
                 cadastro_usina();
                 break;
@@ -603,7 +604,7 @@ int main()
             }
         }
         
-    } while (menu_opcao != 8); // MantÈm o programa executando atÈ o usu·rio encerrar
+    } while (menu_opcao != 8); // Mant√©m o programa executando at√© o usu√°rio encerrar
     
     printf("\nPrograma encerrado!\n");
     
