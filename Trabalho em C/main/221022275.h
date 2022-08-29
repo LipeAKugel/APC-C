@@ -18,8 +18,8 @@
 #define SAIR 8
 
 #define TAM_DATA 10
-#define TAM_CNPJ 14
-#define TAM_CPF 11
+#define TAM_CNPJ 15
+#define TAM_CPF 12
 #define TAM_NOME 100
 
 void limpar_tela() // Limpa o terminal

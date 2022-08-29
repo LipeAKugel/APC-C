@@ -81,12 +81,12 @@ int valida_cnpj(char cnpj[]) // Verifica CNPJ.
 	dado_valido = 1;
 	
 	// Verificação do formato
-	if (cnpj[TAM_CNPJ] != '\0') {
+	if (cnpj[TAM_CNPJ-1] != '\0') {
 		dado_valido = 0; // Caso chegou aqui, há mais caracteres que o devido.
 	}
 	
 	// Verificação dos valores numéricos
-	for (int i = 0; i < (TAM_CNPJ); i++) {
+	for (int i = 0; i < (TAM_CNPJ-1); i++) {
 		if (!(cnpj[i] >= 48 && cnpj[i] <= 57)) {
 			dado_valido = 0; // Caso chegou aqui, um caracter do CNPJ não é um número.
 		}
@@ -94,14 +94,14 @@ int valida_cnpj(char cnpj[]) // Verifica CNPJ.
 	
 	// Verificação do 0001 ou "matriz"
 	// Como estamos cadastrando uma usina, e não uma filial, o CNPJ terá somente o 0001.
-	for (int i = 8; i < (TAM_CNPJ-4); i++) {
+	for (int i = 8; i < (TAM_CNPJ-5); i++) {
 		if (cnpj[i] != '0') dado_valido = 0; // Caso chegou aqui, há um valor incorreto.
 	}
 	
 	//if (cnpj[TAM_CNPJ-3] != '1') dado_valido = 0; // Caso chegou aqui, há um valor incorreto.
 	
 	// Armazenamento dos valores númericos do CNPJ
-	for (int i = 0; i < (TAM_CNPJ); i++) {
+	for (int i = 0; i < (TAM_CNPJ-1); i++) {
 		valores_cnpj[i] = (cnpj[i] - '0'); // Pega os valores numéricos do CNPJ e guarda num vetor int.
 	}
 	
@@ -112,7 +112,7 @@ int valida_cnpj(char cnpj[]) // Verifica CNPJ.
 	// Primeiro digito verificador
 	
 	digito_verificador = 0;
-	for (int i = 0; i < TAM_CNPJ-2; i++) {
+	for (int i = 0; i < TAM_CNPJ-3; i++) {
 		// Soma todos os resultados da multiplicação entre os números do CNPJ e dos respectivos números
 		// na posições da primeira sequência de verificação.
 		digito_verificador = (digito_verificador + (valores_cnpj[i] * sequencia_verificacao1[i]));
@@ -127,14 +127,14 @@ int valida_cnpj(char cnpj[]) // Verifica CNPJ.
 		digito_verificador = (11 - digito_verificador); // Caso chegou aqui, o primeiro digito verificador é igual a 11 menos o resto.
 	}
 	
-	if (valores_cnpj[TAM_CNPJ-2] != digito_verificador) { // Compara o digito do CNPJ e o digito encontrado no algoritmo anterior.
+	if (valores_cnpj[TAM_CNPJ-3] != digito_verificador) { // Compara o digito do CNPJ e o digito encontrado no algoritmo anterior.
 		dado_valido = 0; // Caso chegou aqui, o primeiro digito verificador do CNPJ está incorreto.
 	}
 	
 	// Segundo digito verificador
 	
 	digito_verificador = 0;
-	for (int i = 0; i < TAM_CNPJ-1; i++) {
+	for (int i = 0; i < TAM_CNPJ-2; i++) {
 		// Soma todos os resultados da multiplicação entre os números do CNPJ e dos respectivos números
 		// na posições da segunda sequência de verificação.
 		digito_verificador = (digito_verificador + (valores_cnpj[i] * sequencia_verificacao2[i]));
@@ -149,7 +149,7 @@ int valida_cnpj(char cnpj[]) // Verifica CNPJ.
 		digito_verificador = (11 - digito_verificador); // Caso chegou aqui, o segundo digito verificador é igual a 11 menos o resto.
 	}
 	
-	if (valores_cnpj[TAM_CNPJ-1] != digito_verificador) { // Compara o digito do CNPJ e o digito encontrado no algoritmo anterior.
+	if (valores_cnpj[TAM_CNPJ-2] != digito_verificador) { // Compara o digito do CNPJ e o digito encontrado no algoritmo anterior.
 		dado_valido = 0; // Caso chegou aqui, o segundo digito verificador do CNPJ está incorreto.
 	}
 	
@@ -168,12 +168,12 @@ int valida_cpf(char cpf[]) // Verifica CPF.
     // Verificação da estrutura
     
     // Verificação do formato
-    if (cpf[TAM_CPF] != '\0') {
+    if (cpf[TAM_CPF-1] != '\0') {
         dado_valido = 0; // Caso chegou aqui, existem caracteres além tamanho máximo.
     }
     
     // Verificação dos valores númericos
-    for (int i = 0; i < TAM_CPF; i++) {
+    for (int i = 0; i < TAM_CPF-1; i++) {
     	if (!(cpf[i] >= 48 && cpf[i] <= 57)) {
     		dado_valido = 0; // Caso chegou aqui, existem caracteres que não são números.
 		}
@@ -181,7 +181,7 @@ int valida_cpf(char cpf[]) // Verifica CPF.
     
     // Armazenamento dos valores númericos do CPF
     j = 0;
-    for (int i = 0; i < TAM_CPF; i++) {
+    for (int i = 0; i < TAM_CPF-1; i++) {
         if (cpf[i] >= 48 && cpf[i] <= 57) {
             valores_cpf[j] = (cpf[i] - '0'); // Guarda os caracteres numéricos do CPF em um vetor inteiro
             j++;
@@ -196,7 +196,7 @@ int valida_cpf(char cpf[]) // Verifica CPF.
     
     k = 10;
     digito_verificador = 0;
-    for (int i = 0; i < TAM_CPF-2; i++) {
+    for (int i = 0; i < TAM_CPF-3; i++) {
     	// Soma todos os resultados da multiplicação entre os números do CPF e dos respectivos números
 		// da primeira sequência de verificação.
         digito_verificador = digito_verificador + (valores_cpf[i] * k);
@@ -211,7 +211,7 @@ int valida_cpf(char cpf[]) // Verifica CPF.
 		digito_verificador = 11 - digito_verificador; // Caso chegou aqui, o primeiro digito verificador é igual a 11 menos o resto.
 	}
     
-    if (valores_cpf[TAM_CPF-2] != digito_verificador) { // Compara o digito do CPF e o digito encontrado no algoritmo anterior.
+    if (valores_cpf[TAM_CPF-3] != digito_verificador) { // Compara o digito do CPF e o digito encontrado no algoritmo anterior.
 		dado_valido = 0; // Caso chegou aqui, o primeiro digito verificador do CPF está incorreto.
 	}
     
@@ -219,7 +219,7 @@ int valida_cpf(char cpf[]) // Verifica CPF.
     
     k = 11;
     digito_verificador = 0;
-    for (int i = 0; i < TAM_CPF-1; i++) {
+    for (int i = 0; i < TAM_CPF-2; i++) {
     	// Soma todos os resultados da multiplicação entre os números do CPF e dos respectivos números
 		// da segunda sequência de verificação.
 		digito_verificador = digito_verificador + (valores_cpf[i] * k);
@@ -234,12 +234,154 @@ int valida_cpf(char cpf[]) // Verifica CPF.
 		digito_verificador = 11 - digito_verificador; // Chegou aqui, o segundo dígito verificador é igual a 11 menos o resto. 
 	}
 	
-	if (valores_cpf[TAM_CPF-1] != digito_verificador) { // Compara o digito do CPF e o digito encontrado no algoritmo anterior.
+	if (valores_cpf[TAM_CPF-2] != digito_verificador) { // Compara o digito do CPF e o digito encontrado no algoritmo anterior.
 		dado_valido = 0; // Caso chegou aqui, o segundo digito verificador do CPF está incorreto.
 	}
     
     return dado_valido; // Retorna o se o dado é inválido (0) ou válido (1).
 }
+
+void listar_usinas() // Lista todas as usinas cadastradas.
+{
+	/*
+	USINAS CADASTRADAS:
+
+	NOME1:
+	CNPJ1:
+	----------------------------
+	NOME2:
+	CNPJ2:
+	*/
+
+	// Declarações de variáveis
+	FILE *arq_usinas; // Ponteiro do arquivo.
+	USINA usina_ler; // Variável tipo USINA, usada para ler os dados do arquivo.
+
+	// Instruções
+
+	printf("USINAS CADASTRADAS:\n");
+
+	printf("-------------------------------------------------------\n");
+
+	arq_usinas = fopen("usinas.txt", "rb"); // Abre o arquivo.
+	fseek(arq_usinas, 0, SEEK_SET); // Coloca o ponteiro no início do arquivo.
+
+	while (!feof(arq_usinas)) { // Executa até o final do arquivo.
+		fread(&usina_ler, sizeof(USINA), 1, arq_usinas); // Lê toda a struct.
+		if (!feof(arq_usinas)) { // Executa se ainda não for o final do arquivo.
+			printf("NOME: %s\n", usina_ler.nome); // Printa o nome.
+			printf("CNPJ: %s\n", usina_ler.cnpj); // Printa o CNPJ.
+			printf("-------------------------------------------------------\n");
+		}
+	}
+
+	fclose(arq_usinas); // Fecha o arquivo de usinas.
+}
+
+void listar_consumidores() // Lista todos os consumidores localizados.
+{
+	/*
+	CONSUMIDORES CADASTRADOS:
+
+	NOME1:
+	IDENTIFICACAO1:
+	----------------------------
+	NOME2:
+	IDENTIFICACAO2:
+	*/
+
+	// Declarações de variáveis
+	FILE *arq_consum; // Ponteiro do arquivo.
+	CONSUMIDOR consum_ler; // Variável tipo CONSUMIDOR, usada para ler os dados do arquivo.
+
+	// Instruções
+
+	printf("CONSUMIDORES CADASTRADOS:\n");
+
+	printf("-------------------------------------------------------\n");
+
+	arq_consum = fopen("consumidores.txt", "rb"); // Abre o arquivo.
+	fseek(arq_consum, 0, SEEK_SET); // Coloca o ponteiro no início do arquivo.
+
+	while (!feof(arq_consum)) { // Executa até o final do arquivo.
+		fread(&consum_ler, sizeof(CONSUMIDOR), 1, arq_consum); // Lê toda a struct.
+		if (!feof(arq_consum)) { // Executa se ainda não for o final do arquivo.
+			printf("NOME: %s\n", consum_ler.nome); // Printa o nome.
+			printf("ID: %s\n", consum_ler.id); // Printa a identificação.
+			printf("-------------------------------------------------------\n");
+		}
+	}
+
+	fclose(arq_consum); // Fecha o arquivo de consumidores.
+}
+
+int localizar_usina(char cnpj_usina[]) // Localiza uma usina a partir do CNPJ.
+{
+	/* LOCALIZAR USINA
+	Essa função tenta localizar uma usina a partir de um CNPJ inserido
+	Returna 1 se localizar e 0 se não localizar.
+	*/
+
+	// Declaração de variáveis
+	FILE *arq_usinas; // Ponteiro do arquivo de usinas.
+	
+	USINA usina_ler; // Variável tipo USINA, usada para ler os dados.
+
+	int usina_localizada; // Recebe 1 se a usina for localizada e 0 se não
+
+	// Localização da usina:
+	arq_usinas = fopen("usinas.txt", "rb"); // Abre o arquivo de usinas.
+	fseek(arq_usinas, 0, SEEK_SET); // Coloca o ponteiro no início do arquivo.
+
+	usina_localizada = 0;
+	while (!feof(arq_usinas)) { // Executa até o fim do arquivo.
+		fread(&usina_ler, sizeof(USINA), 1, arq_usinas); // Lê toda a struct da usina.
+		if (strstr(usina_ler.cnpj, cnpj_usina) != 0) {
+			// Se chegou aqui, a usina foi identificada.
+			usina_localizada = 1;
+			break;
+		}
+	}
+
+	fclose(arq_usinas);
+
+	return usina_localizada;
+}
+
+int localizar_consumidor(char id_consumidor[]) // Localiza um consumidor apartir da identificação.
+{
+	/* LOCALIZAR CONSUMIDOR
+	Essa função tenta localizar um consumidor a partir de um CNPJ ou CPF inserido
+	Returna 1 se localizar e 0 se não localizar.
+	*/
+
+	// Declaração de variáveis
+	FILE *arq_consum; // Ponteiro do arquivo de consumidor.
+	
+	CONSUMIDOR consum_ler; // Variável tipo CONSUMIDOR, usada para ler os dados.
+
+	int consum_localizado; // Recebe 1 se o consumidor for localizada e 0 se não
+
+	// Localização do consumidor:
+	arq_consum = fopen("consumidores.txt", "rb"); // Abre o arquivo de consumidores.
+	fseek(arq_consum, 0, SEEK_SET); // Coloca o ponteiro no início do arquivo.
+
+	consum_localizado = 0;
+	while (!feof(arq_consum)) { // Executa até o fim do arquivo.
+		fread(&consum_ler, sizeof(CONSUMIDOR), 1, arq_consum); // Lê toda a struct da consumidor.
+		if (strstr(consum_ler.id, id_consumidor) != 0) {
+			// Se chegou aqui, o consumidor foi identificada.
+			consum_localizado = 1;
+			break;
+		}
+	}
+
+	fclose(arq_consum);
+
+	return consum_localizado;
+}
+
+// FUNÇÕES PRINCIPAIS DO PROGRAMA:
 
 void cadastro_usina() // Realiza o cadastro de uma usina.
 {
@@ -275,7 +417,7 @@ void cadastro_usina() // Realiza o cadastro de uma usina.
 	    do {
 	    	printf("CNPJ: (Apenas numeros) ");
 	    	fflush(stdin); // Limpa o buffer.
-	    	gets(usina_rg.cnpj); // Recebe o dado do usuário.
+	    	scanf("%[^\n]", usina_rg.cnpj); // Recebe o dado do usuário.
 	    	dado_valido = valida_cnpj(usina_rg.cnpj); // Chama a função para verificar o dado.
 	    	
 	    	if (dado_valido == 0) {
@@ -287,18 +429,18 @@ void cadastro_usina() // Realiza o cadastro de uma usina.
 	    // NOME
 	    printf("Nome da Usina: ");
 		fflush(stdin); // Limpa o buffer.
-		gets(usina_rg.nome); // Recebe o dado do usuário.
+		scanf("%[^\n]", usina_rg.nome); // Recebe o dado do usuário.
 		
 		
 		// DATA DE INÍCIO DE OPERAÇÃO
 		do {
-			printf("Data de início de operação (DD MM AAAA): ");
+			printf("Data de inicio de operacao (DD MM AAAA): ");
 			fflush(stdin); // Limpa o buffer.
 			scanf("%d %d %d", &usina_rg.data.dia, &usina_rg.data.mes, &usina_rg.data.ano); // Recebe o dado do usuário.
 			dado_valido = valida_data(usina_rg.data); // Chama a função para verificar o dado.
 			 
 			if (dado_valido == 0) {
-				printf("DATA INVÁLIDA!\n"); // Se chegou aqui, o dado está incorreto.
+				printf("DATA INVALIDA!\n"); // Se chegou aqui, o dado está incorreto.
 			}
 			
 		} while (dado_valido == 0); // Caso o dado esteja incorreto, repete o processo.
@@ -306,7 +448,7 @@ void cadastro_usina() // Realiza o cadastro de uma usina.
 		
 		// POTÊNCIA ESTIMADA
 		do {
-			printf("Potência estimada (GW): ");
+			printf("Potencia estimada (MW): ");
 			fflush(stdin); // Limpa o buffer.
 			scanf("%f", &usina_rg.potencia); // Recebe o dado do usuário.
 			
@@ -317,7 +459,7 @@ void cadastro_usina() // Realiza o cadastro de uma usina.
 			}
 			
 			if (dado_valido == 0) {
-				printf("VALOR DE POTÊNCIA INVÁLIDO!\n"); // Se chegou aqui, o dado está incorreto.
+				printf("VALOR DE POTENCIA INVALIDO!\n"); // Se chegou aqui, o dado está incorreto.
 			}
 			
 		} while (dado_valido == 0); // Caso o dado esteja incorreto, repete o processo.
@@ -428,18 +570,18 @@ void cadastro_consumidor() // Realiza o cadastro de um consumidor.
 	    do {
 	    	printf("CPF ou CNPJ: (Apenas numeros) ");
 	    	fflush(stdin); // Limpa o buffer.
-	    	gets(consum_rg.id); // Recebe o dado do usuário.
+	    	scanf("%[^\n]", consum_rg.id); // Recebe o dado do usuário.
 	    	
-	    	if (strlen(consum_rg.id) == TAM_CNPJ) { // Verifica se o usuário digitou um CNPJ.
+	    	if (strlen(consum_rg.id) == TAM_CNPJ-1) { // Verifica se o usuário digitou um CNPJ.
 				dado_valido = valida_cnpj(consum_rg.id); // Chama a função para verificar o CNPJ.
-			} else if (strlen(consum_rg.id) == TAM_CPF) { // Verifica se o usuário digitou um CPF.
+			} else if (strlen(consum_rg.id) == TAM_CPF-1) { // Verifica se o usuário digitou um CPF.
 				dado_valido = valida_cpf(consum_rg.id); // Chama a função para verificar o CPF.
 			} else {
 				dado_valido = 0; // Se chegou aqui, o dado está em formato incorreto.
 			}
 	    	
 	    	if (dado_valido == 0) {
-				printf("CNPJ INCORRETO!\n"); // Se chegou aqui, o dado está incorreto.
+				printf("CNPJ ou CPF INCORRETO!\n"); // Se chegou aqui, o dado está incorreto.
 			}
 		} while (dado_valido == 0); // Caso o dado esteja incorreto, repete o processo.
 	
@@ -447,7 +589,7 @@ void cadastro_consumidor() // Realiza o cadastro de um consumidor.
 		// NOME
 		    printf("Nome do consumidor: ");
 		    fflush(stdin); // Limpa o buffer.
-			gets(consum_rg.nome); // Recebe o dado do usuário.
+			scanf("%[^\n]", consum_rg.nome); // Recebe o dado do usuário.
 			
 			
 		// ARMAZENAMENTO DOS DADOS EM ARQUIVO:
@@ -498,7 +640,7 @@ void cadastro_consumidor() // Realiza o cadastro de um consumidor.
 
 		fclose (arq_consum); // Fecha o arquivo.
 		
-		if (consum_ex == 0) { // Exibir mensagem de erro para o usuário.
+		if (consum_ex == 0) {
 			// Se chegou aqui, não existe consumidor nem usina com os dados inseridos.
 
 			// ARMAZENAMENTO DOS DADOS
@@ -575,8 +717,8 @@ void cadastro_contrato() // Realiza o cadastro de um contrato.
 		fclose(arquivo); // Fecha o arquivo.
 
 		if (dados_disponiveis == 0) { // Se não existir dados para cadastrar o contrato
-			printf("Não é possível cadastrar contrato!\n");
-			printf("Não existe usinas ou consumidores cadastrados\n");
+			printf("Nao e possivel cadastrar contrato!\n");
+			printf("Nao existe usinas ou consumidores cadastrados\n");
 		}
 		
 		if (dados_disponiveis == 1) { // Se existir dados para cadastrar o contrato
@@ -587,7 +729,7 @@ void cadastro_contrato() // Realiza o cadastro de um contrato.
 			do {
 				printf("CNPJ da usina (Apenas numeros): ");
 				fflush(stdin); // Limpa o buffer.
-				gets(contrato_rg.cnpj_usina); // Recebe o dado do usuário.
+				scanf("%[^\n]", contrato_rg.cnpj_usina); // Recebe o dado do usuário.
 
 				dado_valido = valida_cnpj(contrato_rg.cnpj_usina); // Valida o CNPJ
 				
@@ -649,7 +791,7 @@ void cadastro_contrato() // Realiza o cadastro de um contrato.
 
 						fclose(arquivo); // Fecha o arquivo.
 
-						printf("Potência disponível: %.2fGW\n", potencia_dp);
+						printf("Potencia disponivel: %.2fMW\n", potencia_dp);
 						printf("-----------------------------\n");
 					}
 				} else {
@@ -663,7 +805,7 @@ void cadastro_contrato() // Realiza o cadastro de um contrato.
 				do {
 					printf("CPF ou CNPJ do consumidor (Apenas numeros): ");
 					fflush(stdin); // Limpa o buffer.
-					gets(contrato_rg.id_con); // Recebe o dado do usuário.
+					scanf("%[^\n]", contrato_rg.id_con); // Recebe o dado do usuário.
 
 					if (strlen(contrato_rg.id_con) == TAM_CNPJ) { // Verifica se o usuário digitou um CNPJ.
 						dado_valido = valida_cnpj(contrato_rg.id_con); // Chama a função para verificar o CNPJ.
@@ -735,8 +877,10 @@ void cadastro_contrato() // Realiza o cadastro de um contrato.
 								if (contrato_rg.data.mes < usina_cm.data.mes) {
 									dado_valido = 0; // Se chegou aqui o mês do contrato é menor.
 								}
-								if (contrato_rg.data.dia < usina_cm.data.dia) {
-									dado_valido = 0; // Se chegou aqui o dia do contrato é menor.
+								if (contrato_rg.data.mes == usina_cm.data.mes) {
+									if (contrato_rg.data.dia < usina_cm.data.dia) {
+										dado_valido = 0; // Se chegou aqui o dia do contrato é menor.
+									}
 								}
 							}
 
@@ -830,7 +974,7 @@ void cadastro_contrato() // Realiza o cadastro de um contrato.
 
 		if (potencia_dp <= 0) {
 			// Se chegou aqui, a usina não tem potência disponível para contrato
-			printf("A usina nao possui potência disponivel para contratar!\n");
+			printf("A usina nao possui potencia disponivel para contratar!\n");
 		}
 
 		fflush(stdin); // Limpa o buffer.
@@ -875,41 +1019,30 @@ void consulta_usina() // Consulta usina cadastrada.
 			fclose(arq_usinas); // Fecha o arquivo.
 
 			if (arq_usinas != NULL) {
+				// Se chegou aqui, o arquivo de usinas existe.
+
+				listar_usinas(); // Listar todas as usinas cadastradas.
 
 				// RECEBIMENTO DE DADOS:
 
 				// CNPJ
 				do {
-					printf("CNPJ da Usina: ");
+					printf("\nCNPJ da Usina: (Apenas numeros) ");
 					fflush(stdin); // Limpa o buffer.
-					gets(cnpj_usina); // Recebe o dado do usuário.
+					scanf("%[^\n]", cnpj_usina); // Recebe o dado do usuário.
 
 					dado_valido = valida_cnpj(cnpj_usina); // Valida o CNPJ.
 
 					if (dado_valido != 0) {
 						// Se chegou aqui o CNPJ foi inserido corretamente.
 
-						// Localização da usina:
-						arq_usinas = fopen("usinas.txt", "rb"); // Abre o arquivo de usinas.
-						fseek(arq_usinas, 0, SEEK_CUR); // Coloca o ponteiro no início do arquivo.
-
-						dado_valido = 0;
-						while (!feof(arq_usinas)) { // Executa até o fim do arquivo.
-							fread(&usina_ler, sizeof(USINA), 1, arq_usinas); // Lê toda a struct da usina.
-							if (strstr(usina_ler.cnpj, cnpj_usina) != 0) {
-								// Se chegou aqui, a usina foi identificada.
-								dado_valido = 1;
-								break;
-							}
-						}
+						dado_valido = localizar_usina(cnpj_usina); // Verifica se a usina existe.
 
 						if (dado_valido == 0) {
 							// Se chegou aqui, a usina não foi localizada.
 							printf("Nao foi possivel localizar a usina\n");
 							printf("Nao existe usina cadastrada com esse CNPJ!\n");
 						}
-
-						fclose(arq_usinas); // Fecha o arquivo.
 
 					} else {
 						// Se chegou aqui, o CNPJ foi inserido incorretamente.
@@ -921,6 +1054,18 @@ void consulta_usina() // Consulta usina cadastrada.
 
 				// LISTAR OS DADOS:
 
+				arq_usinas = fopen("usinas.txt", "rb"); // Abre o arquivo de usinas.
+				fseek(arq_usinas, 0, SEEK_SET); // Coloca o ponteiro no início do arquivo.
+
+				while (!feof(arq_usinas)) { // Executa até o fim do arquivo.
+					fread(&usina_ler, sizeof(USINA), 1, arq_usinas); // Lê toda a struct da usina.
+					if (strstr(usina_ler.cnpj, cnpj_usina) != 0) {
+						// Se chegou aqui, a usina foi identificada.
+						break;
+					}
+				}
+
+				fclose(arq_usinas);
 
 				/* DADOS DA USINA
 				CNPJ:
@@ -929,7 +1074,7 @@ void consulta_usina() // Consulta usina cadastrada.
 				Potência disponível e percentual:
 				*/
 				printf("\n-----------------------------\n");
-				printf("DADOS DA USINA:\n");
+				printf("DADOS DA USINA:\n\n");
 
 				printf("CNPJ: %s\n", usina_ler.cnpj); // CNPJ.
 				printf("Nome: %s\n", usina_ler.nome); // Nome.
@@ -967,7 +1112,7 @@ void consulta_usina() // Consulta usina cadastrada.
 				// Calcula a porcentagem do total que já foi contratada
 				potencia_per = ((potencia_dp / usina_ler.potencia) * 100);
 
-				printf("Potencia disponivel: %.2fMW (%.2f)%%\n", potencia_dp, potencia_per);
+				printf("Potencia disponivel: %.2fMW (%.2f%%)\n", potencia_dp, potencia_per);
 				printf("-----------------------------\n");
 
 
@@ -1020,12 +1165,12 @@ void consulta_usina() // Consulta usina cadastrada.
 					}
 					if(contrato_localizado == 0) {
 						// Se chegou aqui, não existem contratos vinculados com a usina inserida.
-						printf("Nao existem contratos vinculados a essa usina!");
+						printf("\nNao existem contratos vinculados a essa usina!");
 					}
 
 				} else {
 					// Se chegou aqui, o arquivo de contratos está vazio.
-					printf("Nao existem contratos cadastrados!\n");
+					printf("\nNao existem contratos cadastrados!\n");
 				}
 				fclose(arq_contratos); // Fecha o arquivo de contratos.
 
@@ -1042,10 +1187,24 @@ void consulta_usina() // Consulta usina cadastrada.
 
 void consulta_consumidor() // Consulta consumidor cadastrado.
 {
+	/* CONSULTA DE CONSUMIDOR:
+	Listar os dados do consumidor e as usinas vinculadas ao CPF ou CNPJ inserido pelo usuário.
+	*/
+
 	// Declaração de variáveis
+	FILE *arq_usinas; // Ponteiro do arquivo de usinas.
+	FILE *arq_contratos; // Ponteiro do arquivo de contratos.
+	FILE *arq_consu; // Ponteiro do arquivo de consumidores.
+
+	char consum_id[TAM_CNPJ]; // Recebe o CPF ou CNPJ do consumidor que será consultado.
+	CONSUMIDOR consum_ler; // Variável tipo CONSUMIDOR, usada para ler os dados no arquivo de consumidores.
+	CONTRATO contrato_ler; // Variável tipo CONTRATO, usada para ler os dados no arquivo de contratos.
+	USINA usina_ler; // Variável tipo USINA, usada para ler os dados no arquivo de usinas.
+
+	int dado_valido; // Se o valor for 0 é inválido, se for 1 é válido.
+	int contrato_localizado; // 0 - não existe contrato vinculado, 1 - existe contrato vinculado.
 
 	// Instruções
-
 	do {
 		limpar_tela();
 
@@ -1053,15 +1212,164 @@ void consulta_consumidor() // Consulta consumidor cadastrado.
 		printf("CONSULTAR CONSUMIDOR\n");
 		printf("-----------------------------\n\n");
 
-		printf("Funcao indisponivel!\n");
+		/* VERIFICAÇÃO DA EXISTÊNCIA DE DADOS:
+		Só possível consultar consumidores se já houver consumidores cadastrados.
+		*/
 
-		printf("\nDeseja continuar? [s/n]\n");
-	} while (getchar() == 'S' || getchar() == 's');
+		arq_consu = fopen ("consumidores.txt", "rb"); // Abre o arquivo de consumidores.
+		fclose(arq_consu); // Fecha o arquivo.
+
+		if (arq_consu != NULL) {
+			// Se chegou aqui, o arquivo de consumidores existe.
+
+			listar_consumidores();
+
+			// RECEBIMENTO DE DADOS
+
+			// CPF ou CNPJ
+			do {
+				printf("\nCPF ou CNPJ: (Apenas numeros) ");
+				fflush(stdin); // Limpa o buffer.
+				scanf("%[^\n]", consum_id); // Recebe o dado do usuário.
+
+				if (strlen(consum_id) == TAM_CNPJ-1) { // Verifica se o usuário digitou um CNPJ.
+					dado_valido = valida_cnpj(consum_id); // Chama a função para verificar o CNPJ.
+				} else if (strlen(consum_id) == TAM_CPF-1) { // Verifica se o usuário digitou um CPF.
+					dado_valido = valida_cpf(consum_id); // Chama a função para verificar o CPF.
+				} else {
+					dado_valido = 0; // Se chegou aqui, o dado está em formato incorreto.
+				}
+
+	    		if (dado_valido == 1) {
+					// Se chegou aqui, o CNPJ ou CPF é válido.
+
+					dado_valido = localizar_consumidor(consum_id);
+
+					if (dado_valido == 0) {
+						// Se chegou aqui, o consumidor não foi localizado.
+						printf("Nao foi possivel localizar o consumidor\n");
+						printf("Nao existe consumidor cadastrado com essa identificacao!\n");
+					}
+
+				} else {
+					printf("CNPJ OU CPF INCORRETO!\n"); // Se chegou aqui, o dado está incorreto.
+				}
+
+			} while (dado_valido == 0);
+
+
+			// LISTAMENTO DOS DADOS
+
+			/* DADOS DO CONSUMIDOR
+			Identificacao:
+			Nome:
+			*/
+
+			arq_consu = fopen("consumidores.txt", "rb"); // Abre o arquivo de consumidores.
+			fseek (arq_consu, 0, SEEK_CUR); // Coloca o ponteiro no início do arquivo.
+
+			while (!feof(arq_consu)) { // Executa até o fim do arquivo.
+				fread (&consum_ler, sizeof(CONSUMIDOR), 1, arq_consu); // Lê toda a struct
+				if (strstr(consum_ler.id, consum_id) != 0) {
+					// Se chegou aqui, o consumidor foi localizado.
+					break;
+				}
+			}
+			fclose(arq_consu); // Fecha o arquivo de consumidores.
+
+			printf("\n-----------------------------\n");
+			printf("DADOS DO CONSUMIDOR:\n\n");
+
+			printf("Identificacao: %s\n", consum_ler.id); // CPF ou CNPJ.
+			printf("Nome: %s\n", consum_ler.nome); // Nome.
+
+			printf("-----------------------------\n");
+
+			/* DADOS DAS USINAS VINCULADAS
+			CNPJ:
+			Nome:
+			Data de início do contrato:
+			Potência contratada:
+			*/
+			printf("\n-----------------------------\n");
+			printf("USINAS VINCULADAS:\n\n");
+
+			// Localizar os contratos e usinas vinculadas
+			arq_contratos = fopen("contratos.txt", "rb"); // Abre o arquivo de contratos.
+
+			if (arq_contratos != NULL) {
+				// Se chegou aqui, o arquivo de contratos existe.
+				contrato_localizado = 0;
+				fseek (arq_contratos, 0, SEEK_CUR); // Coloca o ponteiro no início do arquivo.
+
+				while (!feof(arq_contratos)) { // Executa o arquivo até o fim.
+					fread(&contrato_ler, sizeof(CONTRATO), 1, arq_contratos); // Lê toda a struct.
+					if (feof(arq_contratos)) break; // Se estiver no final do arquivo, pare o loop.
+					if (strstr(contrato_ler.id_con, consum_ler.id)) {
+						// Se chegou aqui um contrato vinculado à esse consumidor foi localizado.
+						contrato_localizado = 1;
+
+						// Localizar a usina vinculada
+						arq_usinas = fopen("usinas.txt", "rb"); // Abre o arquivo de usinas.
+						fseek (arq_usinas, 0, SEEK_CUR); // Coloca o ponteiro no início do arquivo.
+
+						while (!feof(arq_usinas)) {
+							fread(&usina_ler, sizeof(USINA), 1, arq_usinas); // Lê toda a struct.
+							if (strstr(usina_ler.cnpj, contrato_ler.cnpj_usina) != 0) {
+								// Se chegou aqui, a usina vinculada foi localizada.
+								break;
+							}
+						}
+
+						printf("CNPJ: %s\n", usina_ler.cnpj); // CNPJ da Usina.
+						printf("Nome: %s\n", usina_ler.nome); // Nome da Usina.
+						// Data de início do contrato:
+						printf("Data de inicio do contrato: ");
+						printf("%i/", contrato_ler.data.dia); // Dia.
+						printf("%i/", contrato_ler.data.mes); // Mês.
+						printf("%i\n", contrato_ler.data.ano); // Ano.
+
+						printf("Potencia contratada: %.2fMW\n\n", contrato_ler.potencia);
+
+						fclose(arq_usinas); // Fecha o arquivo de usinas.
+					}
+				}
+			} else {
+				// Se chegou aqui o arquivo de contratos não existe.
+				contrato_localizado = 0;
+			}
+
+			fclose(arq_contratos); // Fecha o arquivo de contratos.
+
+			if (contrato_localizado == 0) {
+				// Se chegou aqui, não existem contratos nem usinas vinculadas.
+				printf("Nao existem usinas vinculadas com esse consumidor!\n");
+			}
+
+			printf("-----------------------------\n\n");
+
+		} else {
+			printf("Nao existem consumidores cadastrados!\n");
+		}
+
+		fflush(stdin); // Limpa o buffer
+		printf("Deseja continuar? [s/n]\n");
+	} while (getchar() == 's' || getchar() == 'S');
 }
 
 void excluir_usina() // Excluir usina cadastrada.
 {
 	// Declarações de variáveis
+	FILE *arq_usinas; // Ponteiro do arquivo de usinas.
+	FILE *arqtemp_usinas; // Ponteiro do arquivo temporário de usinas.
+	FILE *arq_contratos; // Ponteiro do arquivo de contratos.
+	FILE *arqtemp_contratos; // Ponteiro do arquivo temporário de contratos.
+
+	USINA usina_ler; // Variável tipo USINA, usada para comparar e ler os dados.
+	CONTRATO contrato_ler; // Variável tipo CONTRATO, usada para comparar e ler os dados.
+
+	char cnpj_usina[TAM_CNPJ]; // Usada pra receber o dado do usuário.
+	int dado_valido; // Se o valor for 0, é inválido, se for 1, é válido.
 
 	// Instruções
 
@@ -1072,7 +1380,99 @@ void excluir_usina() // Excluir usina cadastrada.
 		printf("EXCLUIR USINA\n");
 		printf("-----------------------------\n\n");
 
-		printf("Funcao indisponivel!\n");
+		/* VERIFICAÇÃO DA EXISTÊNCIA DO ARQUIVO
+		Não é possível excluir dados se o arquivo de usinas não existe.
+		*/
+
+		arq_usinas = fopen("usinas.txt", "rb"); // Abre o arquivo de usinas.
+		fclose(arq_usinas); // Fecha o arquivo.
+
+		if (arq_usinas != NULL) {
+			// Se chegou aqui, o arquivo de usinas já foi criado.
+
+			listar_usinas(); // Listar todas as usinas cadastradas.
+
+			// RECEBER O CNPJ DA USINA
+			do {
+				printf("\nCNPJ da Usina: (Apenas numeros) ");
+				fflush(stdin); // Limpa o buffer.
+				scanf("%[^\n]", cnpj_usina); // Recebe o dado do usuário.
+
+				dado_valido = valida_cnpj(cnpj_usina); // Valida o CNPJ.
+
+				if (dado_valido != 0) {
+					// Se chegou aqui o CNPJ foi inserido corretamente.
+
+					dado_valido = localizar_usina(cnpj_usina); // Verifica se a usina existe.
+
+					if (dado_valido == 0) {
+						// Se chegou aqui, a usina não foi localizada.
+						printf("Nao foi possivel localizar a usina\n");
+						printf("Nao existe usina cadastrada com esse CNPJ!\n");
+					}
+
+				} else {
+					// Se chegou aqui, o CNPJ foi inserido incorretamente.
+					printf("CNPJ INVALIDO!\n");
+				}
+
+			} while (dado_valido == 0);
+
+
+			// REMOVER OS DADOS
+
+			// Usina
+			arq_usinas = fopen("usinas.txt", "rb"); // Abre o arquivo de usinas.
+
+			fseek(arq_usinas, 0, SEEK_SET); // Coloca o ponteiro no início do arquivo.
+
+			while (!feof(arq_usinas)) { // Executa até o fim do arquivo.
+				fread(&usina_ler, sizeof(USINA), 1, arq_usinas); // Lê toda a struct da usina.
+				if (feof(arq_usinas)) break;
+				if (strstr(usina_ler.cnpj, cnpj_usina) == 0) {
+					printf("\n%s\n", usina_ler.cnpj);
+					printf("%s\n", cnpj_usina);
+					// Se chegou aqui, uma usina diferente da que vai ser excluída foi localizada.
+
+					arqtemp_usinas = fopen("usinas_temp.txt", "ab"); // Abre o arquivo temporário.
+					fseek(arqtemp_usinas, 0, SEEK_END); // Coloca o ponteiro no final do arquivo.
+					fwrite(&usina_ler, sizeof(USINA), 1, arqtemp_usinas); // Armazena os dados.
+					fclose(arqtemp_usinas); // Fecha o arquivo temporário.
+				}
+			}
+
+			fclose(arq_usinas); // Fecha o arquivo de usinas.
+			remove("usinas.txt"); // Excluí o arquivo de usinas.
+			rename("usinas_temp.txt", "usinas.txt"); // Renomeía o arquivo temporário.
+
+			// Contratos
+			arq_contratos = fopen("contratos.txt", "rb"); // Abre o arquivo de contratos.
+
+			fseek(arq_contratos, 0, SEEK_SET); // Coloca o ponteiro no início do arquivo.
+
+			while (!feof(arq_contratos)) { // Executa até o fim do arquivo.
+				fread(&contrato_ler, sizeof(CONTRATO), 1, arq_contratos); // Lê toda a struct do contrato.
+				if (feof(arq_contratos)) break;
+				if (strstr(contrato_ler.cnpj_usina, cnpj_usina) == 0) {
+					// Se chegou aqui, um contrato diferente do que vai ser excluído foi localizado.
+
+					arqtemp_contratos = fopen("contratos_temp.txt", "ab"); // Abre o arquivo temporário.
+					fseek(arqtemp_contratos, 0, SEEK_END); // Coloca o ponteiro no final do arquivo.
+					fwrite(&contrato_ler, sizeof(CONTRATO), 1, arqtemp_contratos); // Armazena os dados.
+					fclose(arqtemp_contratos); // Fecha o arquivo temporário.
+				}
+			}
+
+			fclose(arq_contratos); // Fecha o arquivo de contratos.
+			remove("contratos.txt"); // Excluí o arquivo de contratos.
+			rename("contratos_temp.txt", "contratos.txt"); // Renomeía o arquivo temporário.
+
+			printf("\nUsina removida com sucesso!\n");
+
+		} else {
+			// Se chegou aqui, o arquivo de usinas ainda não foi criado.
+			printf("Nao existem usinas cadastradas!\n");
+		}
 
 		printf("\nDeseja continuar? [s/n]\n");
 	} while (getchar() == 'S' || getchar() == 's');
@@ -1081,23 +1481,125 @@ void excluir_usina() // Excluir usina cadastrada.
 void excluir_consumidor() // Excluir consumidor cadastrada.
 {
 	// Declarações de variáveis
+	FILE *arq_consum; // Ponteiro do arquivo de consumidores.
+	FILE *arqtemp_consum; // Ponteiro do arquivo temporário de consumidores.
+	FILE *arq_contratos; // Ponteiro do arquivo de contratos.
+	FILE *arqtemp_contratos; // Ponteiro do arquivo temporário de contratos.
+
+	CONSUMIDOR consum_ler; // Variável tipo USINA, usada para comparar e ler os dados.
+	CONTRATO contrato_ler; // Variável tipo CONTRATO, usada para comparar e ler os dados.
+
+	char consum_id[TAM_CNPJ]; // Usada pra receber o dado do usuário.
+	int dado_valido; // Se o valor for 0, é inválido, se for 1, é válido.
 
 	// Instruções
 
 	do {
 		limpar_tela();
-		
+
 		printf("-----------------------------\n");
-		printf("EXCLUIR CONSUMIDOR\n");
+		printf("EXCLUIR USINA\n");
 		printf("-----------------------------\n\n");
 
-		printf("Funcao indisponivel!\n");
+		/* VERIFICAÇÃO DA EXISTÊNCIA DO ARQUIVO
+		Não é possível excluir dados se o arquivo de usinas não existe.
+		*/
+
+		arq_consum = fopen("consumidores.txt", "rb"); // Abre o arquivo.
+		fclose(arq_consum); // Fecha o arquivo.
+
+		if (arq_consum != NULL) {
+			// Se chegou aqui o arquivo de consumidores existe.
+
+			listar_consumidores(); // Listar todos os consumidores cadastrados.
+
+			// RECEBER O CPF OU CNPJ DO CONSUMIDOR
+			do {
+				printf("\nCPF ou CNPJ: (Apenas numeros) ");
+				fflush(stdin); // Limpa o buffer.
+				scanf("%[^\n]", consum_id); // Recebe o dado do usuário.
+
+				if (strlen(consum_id) == TAM_CNPJ-1) { // Verifica se o usuário digitou um CNPJ.
+					dado_valido = valida_cnpj(consum_id); // Chama a função para verificar o CNPJ.
+				} else if (strlen(consum_id) == TAM_CPF-1) { // Verifica se o usuário digitou um CPF.
+					dado_valido = valida_cpf(consum_id); // Chama a função para verificar o CPF.
+				} else {
+					dado_valido = 0; // Se chegou aqui, o dado está em formato incorreto.
+				}
+
+	    		if (dado_valido == 1) {
+					// Se chegou aqui, o CNPJ ou CPF é válido.
+
+					dado_valido = localizar_consumidor(consum_id);
+
+					if (dado_valido == 0) {
+						// Se chegou aqui, o consumidor não foi localizado.
+						printf("Nao foi possivel localizar o consumidor\n");
+						printf("Nao existe consumidor cadastrado com essa identificacao!\n");
+					}
+
+				} else {
+					printf("CNPJ OU CPF INCORRETO!\n"); // Se chegou aqui, o dado está incorreto.
+				}
+			} while (dado_valido == 0); // Executa enquanto o dado for inválido.
+
+			// REMOVER OS DADOS
+
+			// Consumidor
+			arq_consum = fopen("consumidores.txt", "rb"); // Abre o arquivo de consumidores.
+			fseek(arq_consum, 0, SEEK_SET); // Coloca o ponteiro no início do arquivo.
+
+			while (!feof(arq_consum)) { // Executa até o fim do arquivo.
+				fread(&consum_ler, sizeof(CONSUMIDOR), 1, arq_consum); // Lê toda a struct.
+				if (feof(arq_consum)) break; // Se não estiver no final do arquivo executa.
+				if (strstr(consum_ler.id, consum_id) == 0) {
+					// Se chegou aqui, um consumidor diferente do que vai ser excluído foi localizado.
+
+					arqtemp_consum = fopen("consumidores_temp.txt", "ab"); // Abre o arquivo temporário.
+					fseek(arqtemp_consum, 0, SEEK_END); // Coloca o ponteiro no final do arquivo.
+					fwrite(&consum_ler, sizeof(CONSUMIDOR), 1, arqtemp_consum); // Armazena os dados.
+					fclose(arqtemp_consum); // Fecha o arquivo temporário.
+				}
+			}
+
+			fclose(arq_consum);
+			remove("consumidores.txt");
+			rename("consumidores_temp.txt", "consumidores.txt");
+
+			// Contratos vinculados
+			arq_contratos = fopen("contratos.txt", "rb"); // Abre o arquivo de contratos.
+
+			fseek(arq_contratos, 0, SEEK_SET); // Coloca o ponteiro no início do arquivo.
+
+			while (!feof(arq_contratos)) { // Executa até o fim do arquivo.
+				fread(&contrato_ler, sizeof(CONTRATO), 1, arq_contratos); // Lê toda a struct do contrato.
+				if (feof(arq_contratos)) break;
+				if (strstr(contrato_ler.id_con, consum_id) == 0) {
+					// Se chegou aqui, um contrato diferente do que vai ser excluído foi localizado.
+
+					arqtemp_contratos = fopen("contratos_temp.txt", "ab"); // Abre o arquivo temporário.
+					fseek(arqtemp_contratos, 0, SEEK_END); // Coloca o ponteiro no final do arquivo.
+					fwrite(&contrato_ler, sizeof(CONTRATO), 1, arqtemp_contratos); // Armazena os dados.
+					fclose(arqtemp_contratos); // Fecha o arquivo temporário.
+				}
+			}
+
+			fclose(arq_contratos); // Fecha o arquivo de contratos.
+			remove("contratos.txt"); // Excluí o arquivo de contratos.
+			rename("contratos_temp.txt", "contratos.txt"); // Renomeía o arquivo temporário.
+
+			printf("\nConsumidor removido com sucesso!\n");
+
+		} else {
+			// Se chegou aqui o arquivo de consumidores ainda não foi criado.
+			printf("Nao existem consumidores cadastrados!\n");
+		}
 
 		printf("\nDeseja continuar? [s/n]\n");
 	} while (getchar() == 'S' || getchar() == 's');
 }
 
-int main() // Função principal.
+int main() // Função main.
 {
     int menu_opcao;
     
